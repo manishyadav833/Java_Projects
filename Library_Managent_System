@@ -1,0 +1,103 @@
+package Games;
+import java.util.*;
+class Book {
+    String bookName;
+    String author;
+    String issuedTo;
+    String issuedOn;
+    Book(String bookName, String author) {
+        this.bookName = bookName;
+        this.author = author;
+        this.issuedTo = "Not Issued";
+        this.issuedOn = "N/A";
+    }
+}
+class Library {
+    ArrayList<Book> books = new ArrayList<>();
+    // Add Book
+    void addBook(String name, String author) {
+        books.add(new Book(name, author));
+        System.out.println("Book Added Successfully ✅");
+    }
+    // Issue Book
+    void issueBook(String bookName, String userName, String date) {
+        for (Book b : books) {
+            if (b.bookName.equalsIgnoreCase(bookName) && b.issuedTo.equals("Not Issued")) {
+                b.issuedTo = userName;
+                b.issuedOn = date;
+                System.out.println("Book Issued Successfully 📖");
+                return;
+            }
+        }
+        System.out.println("Book not available ❌");
+    }
+    // Return Book
+    void returnBook(String bookName) {
+        for (Book b : books) {
+            if (b.bookName.equalsIgnoreCase(bookName) && !b.issuedTo.equals("Not Issued")) {
+                b.issuedTo = "Not Issued";
+                b.issuedOn = "N/A";
+                System.out.println("Book Returned Successfully 🔄");
+                return;
+            }
+        }
+        System.out.println("Invalid Book Name ❌");
+    }
+    // Show All Books
+    void showBooks() {
+        for (Book b : books) {
+            System.out.println("------------------------");
+            System.out.println("Book Name  : " + b.bookName);
+            System.out.println("Author     : " + b.author);
+            System.out.println("Issued To  : " + b.issuedTo);
+            System.out.println("Issued On  : " + b.issuedOn);
+        }
+    }
+}
+public class Library_Mangement_System {
+    public static void main(String[] args) {
+        Library lib = new Library();
+        Scanner sc = new Scanner(System.in);
+        while (true) {
+            System.out.println("\n1. Add Book");
+            System.out.println("2. Issue Book");
+            System.out.println("3. Return Book");
+            System.out.println("4. Show Books");
+            System.out.println("5. Exit");
+            System.out.print("Enter Choice: ");
+            int choice = sc.nextInt();
+            sc.nextLine();
+            switch (choice) {
+                case 1:
+                    System.out.print("Book Name: ");
+                    String name = sc.nextLine();
+                    System.out.print("Author: ");
+                    String author = sc.nextLine();
+                    lib.addBook(name, author);
+                    break;
+                case 2:
+                    System.out.print("Book Name: ");
+                    String issueBook = sc.nextLine();
+                    System.out.print("User Name: ");
+                    String user = sc.nextLine();
+                    System.out.print("Issue Date: ");
+                    String date = sc.nextLine();
+                    lib.issueBook(issueBook, user, date);
+                    break;
+                case 3:
+                    System.out.print("Book Name: ");
+                    String returnBook = sc.nextLine();
+                    lib.returnBook(returnBook);
+                    break;
+                case 4:
+                    lib.showBooks();
+                    break;
+                case 5:
+                    System.out.println("Thank You 🙏");
+                    System.exit(0);
+                default:
+                    System.out.println("Invalid Choice ❌");
+            }
+        }
+    }
+}
