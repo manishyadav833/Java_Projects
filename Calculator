@@ -1,0 +1,106 @@
+package Games;
+import java.util.Scanner;
+class InvalidInputException extends Exception {
+    public InvalidInputException(String message) {
+        super(message);
+    }
+}
+class CannotDivideByZeroException extends Exception {
+    public CannotDivideByZeroException(String message) {
+        super(message);
+    }
+}
+class MaxInputException extends Exception {
+    public MaxInputException(String message) {
+        super(message);
+    }
+}
+class MaxMultiplyInputException extends Exception {
+    public MaxMultiplyInputException(String message) {
+        super(message);
+    }
+}
+// ===== Custom Calculator Class =====
+class CustomCalculator {
+    // Addition
+    public double add(double a, double b) throws MaxInputException {
+        validateInput(a, b);
+        return a + b;
+    }
+    // Subtraction
+    public double subtract(double a, double b) throws MaxInputException {
+        validateInput(a, b);
+        return a - b;
+    }
+    // Multiplication
+    public double multiply(double a, double b) throws MaxInputException, MaxMultiplyInputException {
+        validateInput(a, b);
+        if (a > 70000 || b > 70000) {
+            throw new MaxMultiplyInputException("Multiplication inputs cannot be greater than 70000");
+        }
+        return a * b;
+    }
+    // Division
+    public double divide(double a, double b) throws MaxInputException, CannotDivideByZeroException {
+        validateInput(a, b);
+        if (b == 0) {
+            throw new CannotDivideByZeroException("Cannot divide by zero");
+        }
+        return a / b;
+    }
+    // Input Validation Method
+    private void validateInput(double a, double b) throws MaxInputException {
+        if (a > 100000 || b > 100000) {
+            throw new MaxInputException("Input cannot be greater than 100000");
+        }
+    }
+}
+// ===== Main Class =====
+public class Calculator1 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        CustomCalculator calc = new CustomCalculator();
+        System.out.println("=== Calculator ===");
+        System.out.println("1. Addition");
+        System.out.println("2. Subtraction");
+        System.out.println("3. Multiplication");
+        System.out.println("4. Division");
+        System.out.print("Enter your choice (1–4): ");
+        int choice = sc.nextInt();
+        try {
+            System.out.print("Enter first number: ");
+            double a = sc.nextDouble();
+            System.out.print("Enter second number: ");
+            double b = sc.nextDouble();
+            double result = 0;
+            switch (choice) {
+                case 1:
+                    result = calc.add(a, b);
+                    break;
+                case 2:
+                    result = calc.subtract(a, b);
+                    break;
+                case 3:
+                    result = calc.multiply(a, b);
+                    break;
+                case 4:
+                    result = calc.divide(a, b);
+                    break;
+                default:
+                    throw new InvalidInputException("Invalid choice! Please choose between 1–4.");
+            }
+            System.out.println("Result: " + result);
+        } catch (InvalidInputException e) {
+            System.out.println("Error: " + e.getMessage());
+        } catch (CannotDivideByZeroException e) {
+            System.out.println("Error: " + e.getMessage());
+        } catch (MaxInputException e) {
+            System.out.println("Error: " + e.getMessage());
+        } catch (MaxMultiplyInputException e) {
+            System.out.println("Error: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Some other error occurred: " + e.getMessage());
+        }
+        sc.close();
+    }
+}
