@@ -1,0 +1,154 @@
+package Basic_Projects;
+import java.util.*;
+class Plan{
+    double wallet = 5000; //Wallet Balance
+    // ================= Payment Method =================
+   public void processPayment(Scanner sc, int amount) {
+        System.out.println("Plan Amount : ₹" + amount);
+        System.out.print("Confirm Recharge (yes/no) : ");
+        String confirm = sc.next();
+
+        if (!confirm.equalsIgnoreCase("yes")) {
+            System.out.println("Recharge Cancelled ");
+            return;
+        }
+
+        if (wallet >= amount) {
+            wallet= wallet - amount;
+            System.out.println("Recharge Successful");
+            System.out.println("Remaining Balance : ₹" + wallet);
+        } else {
+            System.out.println("Insufficient Balance ");
+        }
+    }
+    // ================= Recharge Plan =================
+    public void rechargePlan(Scanner sc) {
+        System.out.println("\n--- Recharge Plans ---");
+        System.out.println("1. ₹349  (28 days, 1.5GB/day)");
+        System.out.println("2. ₹389  (1 month, 2GB/day)");
+        System.out.println("3. ₹849  (84 days, 2GB/day)");
+        System.out.println("4. ₹3899 (365 days, 2GB/day)");
+        System.out.print("Select plan = ");
+        int ch = sc.nextInt();
+
+        int amount = 0;
+
+        switch (ch) {
+            case 1: amount = 349; break;
+            case 2: amount = 389; break;
+            case 3: amount = 849; break;
+            case 4: amount = 3899; break;
+            default:
+                System.out.println("Invalid plan!");
+                return;
+        }
+
+        processPayment(sc, amount);
+    }
+
+    // ================= Add-on Data =================
+    public void addData(Scanner sc) {
+        System.out.println("\n--- Add-on Data ---");
+        System.out.println("1. ₹35  (1.5GB)");
+        System.out.println("2. ₹26  (1GB)");
+        System.out.println("3. ₹49  (Unlimited till 12AM)");
+        System.out.println("4. ₹99  (4GB / 3 days)");
+        System.out.print("Select plan = ");
+        int ch = sc.nextInt();
+
+        int amount = 0;
+
+        switch (ch) {
+            case 1: amount = 35; break;
+            case 2: amount = 26; break;
+            case 3: amount = 49; break;
+            case 4: amount = 99; break;
+            default:
+                System.out.println("Invalid plan!");
+                return;
+        }
+
+        processPayment(sc, amount);
+    }
+
+    // ================= TopUp =================
+    public void topUp(Scanner sc) {
+        System.out.println("\n--- Entertainment TopUp ---");
+        System.out.println("1. ₹189");
+        System.out.println("2. ₹289");
+        System.out.println("3. ₹349");
+        System.out.println("4. ₹499");
+        System.out.print("Select plan = ");
+        int ch = sc.nextInt();
+
+        int amount = 0;
+
+        switch (ch) {
+            case 1: amount = 189; break;
+            case 2: amount = 289; break;
+            case 3: amount = 349; break;
+            case 4: amount = 499; break;
+            default:
+                System.out.println("Invalid plan!");
+                return;
+        }
+
+        processPayment(sc, amount);
+    }
+}
+public class Best1_Recharge {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Plan p=new Plan();
+
+        System.out.println("....Welcome to Recharge Plan System....");
+
+        // ✅ Mobile Number Validation
+        System.out.print("Enter your Mobile number = ");
+        long number = sc.nextLong();
+
+        if (number < 1000000000L || number > 9999999999L) {
+            System.out.println("Invalid mobile number!");
+            System.out.println("Number must be exactly 10 digits.");
+            return;
+        }
+
+        System.out.print("Enter SIM name = ");
+        String sim = sc.next();
+
+        int choice;
+        do {
+            System.out.println("\n-----------------------------");
+            System.out.println("Wallet Balance : ₹" + p.wallet);
+            System.out.println("1. Recharge Plan");
+            System.out.println("2. Add-on Data");
+            System.out.println("3. Entertainment TopUp");
+            System.out.println("4. Exit");
+            System.out.print("Enter choice = ");
+            choice = sc.nextInt();
+
+            switch (choice) {
+                case 1:
+                    p.rechargePlan(sc);
+                    break;
+
+                case 2:
+                    p.addData(sc);
+                    break;
+
+                case 3:
+                    p.topUp(sc);
+                    break;
+
+                case 4:
+                    System.out.println("Thank you for using our system 🙏");
+                    break;
+
+                default:
+                    System.out.println("Invalid choice, try again.");
+            }
+        } while (choice != 4);
+
+        sc.close();
+    }
+}
